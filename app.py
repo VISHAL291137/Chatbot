@@ -1,15 +1,11 @@
-
 from nltk.chat.util import Chat, reflections
 from datetime import datetime
 import pytz
-# Define pairs - patterns and responses
-#This code creates a basic chatbot using NLTK in Python.
-#It defines patterns and responses for various user inputs.
-#The chatbot responds to user input based on matching patterns.
-#It can provide information about time, date, Python, and has some custom responses.
-#The code runs in an infinite loop, continuously taking user input and responding until the user types "quit."
+import requests
+
+
 pairs = [
-    (r'hello|hi|hey', ['Hi there!', 'Hello!', 'Hey!']),
+  (r'hello|hi|hey', ['Hi there!', 'Hello!', 'Hey!']),
     (r'how are you', ['I\'m good, thanks. How can I help you today?',
      'I\'m just a bot, but I\'m here to assist.']),
     (r'what is your name', ['I am a DARKHAT.', 'You can call me ChatGPT.']),
@@ -44,14 +40,35 @@ pairs = [
 
 
 ]
+
+
+google_api_key = 'YOUR_GOOGLE_API_KEY'
+google_api_url = 'https://www.googleapis.com/customsearch/v1'  
+
+
+wikipedia_api_key = 'YOUR_WIKIPEDIA_API_KEY'
+wikipedia_api_url = 'https://en.wikipedia.org/w/api.php' 
+
 # Create the DARKHAT
 DARKHAT = Chat(pairs, reflections)
 
+def search_google(query):
+    params = {'key': google_api_key, 'q': query}
+    response = requests.get(google_api_url, params=params)
+    data = response.json()
+    # Process the data as needed
+    return data
 # Interaction loop
 while True:
     user_input = input("You: ")
     if user_input.lower() == 'quit':
         print("DARKHAT: Goodbye!")
         break
-    response = DARKHAT.respond(user_input)
-    print("DARKHAT:", response)
+
+    if 'wikipedia' in user_input.lower():
+        # Wikipedia API search
+        wikipedia_results = search_wikipedia(user_input)
+        print("Wikipedia Results:", wikipedia_results)
+    else:
+        response = DARKHAT.respond(user_input)
+        print("DARKHAT:", response)
