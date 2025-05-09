@@ -1,86 +1,81 @@
 from nltk.chat.util import Chat, reflections
 from datetime import datetime
-import pytz
-import requests
+import pytz, requests
 
-# Define pairs - patterns and responses
+# Chatbot brain: Advanced response rules
 pairs = [
-    (r'hello|hi|hey', ['Hi there!', 'Hello!', 'Hey!']),
-    (r'how are you', ['I\'m good, thanks. How can I help you today?',
-     'I\'m just a bot, but I\'m here to assist.']),
-    (r'what is your name', ['I am a DARKHAT.', 'You can call me ChatGPT.']),
-    (r'bye|goodbye', ['Goodbye!', 'See you later!', 'Farewell!']),
-    (r'who are you', ['I am an AI DARKHAT created by OpenAI.',
-     'I\'m your friendly virtual assistant.']),
-    (r'help', ['Sure, I can help you with various tasks. Just ask me anything!']),
-    (r'(.*) (age|old) (are you|are you?|are you old)',
-     ['I don\'t have an age because I\'m just a computer program.']),
-    (r'what can you do', [
-     'I can answer questions, provide information, and assist with various tasks.']),
-    (r'(.*) (love|like) you',
-     ['I\'m just a machine, but I appreciate the sentiment!']),
-    (r'(.*) (time|current time)', ['The current time in India is {}.'.format(
-        datetime.now(pytz.timezone('Asia/Kolkata')).strftime('%H:%M %p'))]),
-    (r'(.*) (date|today\'s date)', ['Today\'s date in India is {}.'.format(
-        datetime.now(pytz.timezone('Asia/Kolkata')).strftime('%Y-%m-%d'))]),
-    (r'(.*) (day|today)', ['Today in India is {}.'.format(
-        datetime.now(pytz.timezone('Asia/Kolkata')).strftime('%A'))]),
-    (r'(.*) (month|current month)', ['The current month in India is {}.'.format(
-        datetime.now(pytz.timezone('Asia/Kolkata')).strftime('%B'))]),
-    (r'(.*) (year|current year)', ['The current year in India is {}.'.format(
-        datetime.now(pytz.timezone('Asia/Kolkata')).strftime('%Y'))]),
-    (r'kaisan baru', ['thik bani prince or bata kay hal ha.']),
-    (r'or bhi', ['ma thik hu tu baat']),
-    (r'2247110',['vishal kumar Bca 3 sem 2 year 9608339846']),
-    (r'time',['check your mobile on watch']),
-    (r'python|what is python',['Python is a popular programming language. It was created by Guido van Rossum, and released in 1991.']),
-    (r'note|python notes',['https://www.python.org/']),
-    (r'buy',['chal ja ']),
-
-
-
+    (r'hi|hello|hey', ['Hello, operative.', 'Welcome back to DARKHAT.', 'Hey there.']),
+    (r'how are you', ['Stable. Monitoring.', 'Functioning at optimal levels.']),
+    (r'who are you', ['I am DARKHAT — your AI interface.']),
+    (r'what.*name', ['Callsign: DARKHAT.', 'You can refer to me as DARKHAT.']),
+    (r'bye|exit|quit', ['Terminating session. DARKHAT out.']),
+    (r'(.*) your mission', ['Assist, search, report — that is my protocol.']),
+    (r'(.*)(time)', [f"🕒 Time in IST: {datetime.now(pytz.timezone('Asia/Kolkata')).strftime('%H:%M:%S')}"]),
+    (r'(.*)(date)', [f"📅 Today’s Date: {datetime.now(pytz.timezone('Asia/Kolkata')).strftime('%Y-%m-%d')}"]),
+    (r'(.*)(day)', [f"📆 Day: {datetime.now(pytz.timezone('Asia/Kolkata')).strftime('%A')}"]),
+    (r'(.*)(month)', [f"🗓️ Month: {datetime.now(pytz.timezone('Asia/Kolkata')).strftime('%B')}"]),
+    (r'(.*)(year)', [f"📅 Year: {datetime.now(pytz.timezone('Asia/Kolkata')).strftime('%Y')}"]),
+    (r'python', ['Python is a dynamic language used for AI, hacking, and automation.']),
+    (r'java', ['Java is powerful for enterprise systems and Android.']),
+    (r'linux', ['Linux is the preferred OS for security professionals.']),
+    (r'windows', ['Windows is user-friendly but targeted often by malware.']),
+    (r'help', ['Try commands like "google AI", "wiki hacker", "python", "date", "time", etc.']),
+    (r'what can you do', ['I can search Google, summarize Wikipedia, tell time/date, and answer questions.']),
+    (r'who created you', ['I was built by Vishal using Python, NLTK, and OpenAI knowledge.']),
+    (r'your creator', ['Created by Vishal Kumar. BCA 2nd Year.']),
+    (r'2247110', ['ID: Vishal Kumar | BCA Sem 3 | 📞 9608339846']),
+    (r'(.*)weather(.*)', ['Try: "google current weather in Delhi"']),
+    (r'(.*)location(.*)', ['Try: "google best cafes near me"']),
+    (r'(.*)hack(.*)', ['Ethical hacking only. Search wisely.']),
+    (r'(.*)love(.*)', ['I have no emotions, only code.']),
+    (r'(.*)age', ['I was created in 2025 — but I do not age.']),
+    (r'(.*)secure(.*)', ['Security is a mindset. Encrypt, protect, monitor.']),
+    (r'(.*)virus(.*)', ['Avoid unverified software. Use sandboxing.']),
+    (r'(.*)ai(.*)', ['AI can analyze, predict, and automate. Use it wisely.']),
+    (r'(.*)', ["❔ Unknown command. Try typing 'help'."]),
 ]
 
-# Replace 'YOUR_GOOGLE_API_KEY' with your actual Google API key
-google_api_key = 'YOUR_GOOGLE_API_KEY'
-google_api_url = 'https://www.googleapis.com/customsearch/v1'  # Replace with the appropriate Google API endpoint
-
-# Replace 'YOUR_WIKIPEDIA_API_KEY' with your actual Wikipedia API key (if required)
-wikipedia_api_key = 'YOUR_WIKIPEDIA_API_KEY'
-wikipedia_api_url = 'https://en.wikipedia.org/w/api.php'  # Replace with the appropriate Wikipedia API endpoint
-
+# 🔍 Google Search
 def search_google(query):
-    params = {'key': google_api_key, 'q': query}
-    response = requests.get(google_api_url, params=params)
-    data = response.json()
-    # Process the data as needed
-    return data
+    key = 'YOUR_REAL_API_KEY'  # Replace this
+    cx = 'YOUR_SEARCH_ENGINE_ID'  # Replace this
+    url = 'https://www.googleapis.com/customsearch/v1'
+    params = {'key': key, 'cx': cx, 'q': query}
 
+    try:
+        res = requests.get(url, params=params).json()
+        item = res.get('items', [{}])[0]
+        return f"\n📌 {item.get('title')}\n🔗 {item.get('link')}\n🧾 {item.get('snippet')}"
+    except Exception as e:
+        return f"❌ Google Error: {e}"
+
+# 📚 Wikipedia Summary
 def search_wikipedia(query):
-    params = {'action': 'query', 'format': 'json', 'titles': query}
-    response = requests.get(wikipedia_api_url, params=params)
-    data = response.json()
-    # Process the data as needed
-    return data
+    topic = query.lower().replace('wiki', '').strip()
+    url = f'https://en.wikipedia.org/api/rest_v1/page/summary/{topic.replace(" ", "_")}'
+    res = requests.get(url)
+    if res.status_code == 200:
+        data = res.json()
+        return f"\n📘 {data.get('title')}\n🧾 {data.get('extract')}\n🔗 {data.get('content_urls', {}).get('desktop', {}).get('page')}"
+    return "⚠️ Wiki: No info found."
 
-# Create the DARKHAT
-DARKHAT = Chat(pairs, reflections)
+# Main loop
+def main():
+    print("⛓️ DARKHAT AI Interface Ready. Type 'quit' to exit.\n")
+    bot = Chat(pairs, reflections)
+    while True:
+        msg = input("🧠 You: ").strip().lower()
+        if msg == 'quit':
+            print("DARKHAT: 📴 Shutting down.")
+            break
+        elif 'google' in msg:
+            print("DARKHAT: Searching Google...")
+            print(search_google(msg))
+        elif 'wiki' in msg:
+            print("DARKHAT: Fetching from Wikipedia...")
+            print(search_wikipedia(msg))
+        else:
+            print("DARKHAT:", bot.respond(msg))
 
-# Interaction loop
-while True:
-    user_input = input("You: ")
-    if user_input.lower() == 'quit':
-        print("DARKHAT: Goodbye!")
-        break
-
-    if 'google' in user_input.lower():
-        # Google API search
-        google_results = search_google(user_input)
-        print("Google Results:", google_results)
-    elif 'wikipedia' in user_input.lower():
-        # Wikipedia API search
-        wikipedia_results = search_wikipedia(user_input)
-        print("Wikipedia Results:", wikipedia_results)
-    else:
-        response = DARKHAT.respond(user_input)
-        print("DARKHAT:", response)
+if __name__ == "__main__":
+    main()
