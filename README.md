@@ -87,19 +87,3 @@ kotlin
 Copy
 Edit
 ⛓️ DARKHAT AI Interface Ready. Type 'quit' to exit.
-
-🧠 You: wiki linux
-DARKHAT:
-📘 Linux
-🧾 Linux is an open-source Unix-like OS kernel. Popular in servers, dev, and security.
-🔗 https://en.wikipedia.org/wiki/Linux
-📂 License
-MIT License – free for personal and educational use.
-
-yaml
-Copy
-Edit
-
----
-
-Would you like me to generate this as a downloadable `README.md` file for you now?
