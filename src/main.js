@@ -1,3 +1,4 @@
+import { getAIResponse, searchWithAI } from './ai-search.js';
 
 const chatMessages = document.getElementById('chatMessages');
 const userInput = document.getElementById('userInput');
@@ -110,14 +111,16 @@ function getResponse(input) {
     }
     if (lowerInput.includes('help')) {
         return `📋 <strong>Available Commands:</strong><br>
+        • Ask any question - AI-powered search<br>
         • "wiki [topic]" - Search Wikipedia<br>
+        • "google [query]" - Web search<br>
         • "time/date/day/month/year" - Get current info<br>
         • "python/java/linux" - Learn about tech<br>
         • "who are you" - About DARKHAT<br>
         • "help" - Show this menu`;
     }
     if (lowerInput.includes('what can you do')) {
-        return 'I can search Wikipedia, provide date/time info, answer tech questions, and assist with information gathering.';
+        return 'I can answer any question using AI search, search Wikipedia and Google, provide date/time info, and assist with information gathering.';
     }
     if (lowerInput.includes('creator') || lowerInput.includes('created you')) {
         return 'Created by Vishal Kumar, BCA 2nd Year. Student ID: 2247110 | Contact: 9608339846';
@@ -148,16 +151,49 @@ async function handleSend() {
     const lowerMessage = message.toLowerCase();
 
     if (lowerMessage.includes('wiki')) {
-        addMessage('Searching Wikipedia...', false);
+        addMessage('🔍 Searching Wikipedia...', false);
         const result = await searchWikipedia(message);
         setTimeout(() => {
             const messages = chatMessages.getElementsByClassName('message');
             messages[messages.length - 1].remove();
             addMessage(result, false);
         }, 500);
+    } else if (lowerMessage.includes('google') || lowerMessage.includes('search')) {
+        addMessage('🔍 Searching the web...', false);
+        const query = message.replace(/google|search/gi, '').trim();
+        const result = await searchWithAI(query);
+        setTimeout(() => {
+            const messages = chatMessages.getElementsByClassName('message');
+            messages[messages.length - 1].remove();
+
+            if (result.success && result.snippet) {
+                addMessage(`📌 <strong>${result.title}</strong><br><br>${result.snippet}<br><br>🔗 <a href="${result.url}" target="_blank">Read more</a>`, false);
+            } else if (result.searchUrl) {
+                addMessage(`${result.answer}<br><br>🔍 <a href="${result.searchUrl}" target="_blank">DuckDuckGo Results</a> | <a href="${result.googleUrl}" target="_blank">Google Results</a>`, false);
+            } else {
+                addMessage('⚠️ Search unavailable. Try asking a different way.', false);
+            }
+        }, 800);
     } else {
-        const response = getResponse(message);
-        setTimeout(() => addMessage(response, false), 300);
+        const basicResponse = getResponse(message);
+
+        if (basicResponse.includes('Command not recognized')) {
+            addMessage('🤔 Thinking...', false);
+            const aiResult = await getAIResponse(message);
+
+            setTimeout(() => {
+                const messages = chatMessages.getElementsByClassName('message');
+                messages[messages.length - 1].remove();
+
+                if (aiResult) {
+                    addMessage(aiResult, false);
+                } else {
+                    addMessage(`I can help you search for that. Try: "google ${message}"`, false);
+                }
+            }, 800);
+        } else {
+            setTimeout(() => addMessage(basicResponse, false), 300);
+        }
     }
 }
 
