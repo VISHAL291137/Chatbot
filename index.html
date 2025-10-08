@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DARKHAT AI - Advanced Chat Interface</title>
+    <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">⛓️ DARKHAT AI</h1>
+                <p class="tagline">Advanced Intelligence Interface</p>
+            </div>
+        </header>
+
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    <div class="message-content">
+                        <strong>DARKHAT:</strong> System online. Interface ready. Type your command.
+                    </div>
+                    <div class="message-time" id="currentTime"></div>
+                </div>
+            </div>
+
+            <div class="chat-input-container">
+                <input
+                    type="text"
+                    id="userInput"
+                    class="chat-input"
+                    placeholder="Enter command... (try 'help', 'wiki AI', 'time')"
+                    autocomplete="off"
+                >
+                <button id="sendButton" class="send-button">
+                    <span>SEND</span>
+                </button>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Created by Vishal Kumar | BCA 2nd Year | Powered by Supabase</p>
+        </footer>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>
