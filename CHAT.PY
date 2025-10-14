@@ -23,7 +23,7 @@ pairs = [
     (r'what can you do', ['I can search Google, summarize Wikipedia, tell time/date, and answer questions.']),
     (r'who created you', ['I was built by Vishal using Python, NLTK, and OpenAI knowledge.']),
     (r'your creator', ['Created by Vishal Kumar. BCA 2nd Year.']),
-    (r'2247110', ['ID: Vishal Kumar | BCA Sem 3 | 📞 9608339846']),
+    (r'00000', ['yogyata is chor in paper me']),
     (r'(.*)weather(.*)', ['Try: "google current weather in Delhi"']),
     (r'(.*)location(.*)', ['Try: "google best cafes near me"']),
     (r'(.*)hack(.*)', ['Ethical hacking only. Search wisely.']),
@@ -80,4 +80,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
