@@ -32,6 +32,7 @@ pairs = [
     (r'(.*)secure(.*)', ['Security is a mindset. Encrypt, protect, monitor.']),
     (r'(.*)virus(.*)', ['Avoid unverified software. Use sandboxing.']),
     (r'(.*)ai(.*)', ['AI can analyze, predict, and automate. Use it wisely.']),
+    (r'00000', ['yogyata is chor in paper me ']),
     (r'(.*)', ["❔ Unknown command. Try typing 'help'."]),
 ]
 
@@ -79,3 +80,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
